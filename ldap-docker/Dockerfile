@@ -35,5 +35,5 @@ EXPOSE 389
 EXPOSE 636
 
 #
-# Last is the actual command to start up NGINX within our Container
+# Last is the actual command to start up all required services within our Container
 CMD service ssh start && service slapd start && service apache2 start
