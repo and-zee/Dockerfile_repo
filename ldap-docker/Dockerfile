@@ -12,7 +12,7 @@ RUN apt-get update -y && apt-get upgrade -y
 
 #
 # Install all required services to run openldap.
-RUN apt-get install -y cron openssh-server
+RUN apt-get install -y cron openssh-server net-tools vim
 # cron openssh-server
 # slapd ldap-utils
 # gnutls-bin ssl-cert
