@@ -12,8 +12,12 @@ RUN apt-get update -y && apt-get upgrade -y
 
 #
 # Install all required services to run openldap.
-RUN apt-get install -y cron openssh-server gnutls-bin ssl-cert apache2 php-cgi libapache2-mod-php php-mbstring php-common php-pear ldap-account-manager
-# php slapd ldap-utils cron openssh-server gnutls-bin ssl-cert apache2 php-cgi libapache2-mod-php php-mbstring php-common php-pear ldap-account-manager
+RUN apt-get install -y cron openssh-server
+# cron openssh-server
+# slapd ldap-utils
+# gnutls-bin ssl-cert
+# apache2 php php-cgi libapache2-mod-php php-mbstring php-common php-pear
+# ldap-account-manager
 RUN mkdir -p /home/zee
 RUN touch /home/zee/service.log
 COPY cron_config /home/zee/cron_config
