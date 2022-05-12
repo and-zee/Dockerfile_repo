@@ -8,32 +8,25 @@ LABEL maintainer="hello.andre@email.com"
 
 #
 # Update the image to the latest packages
-RUN apt update && apt upgrade -y
+RUN apt-get update -y && apt-get upgrade -y
 
 #
 # Install all required services to run openldap.
-RUN apt install openssh-server slapd ldap-utils gnutls-bin ssl-cert apache2 php php-cgi libapache2-mod-php php-mbstring php-common php-pear ldap-account-manager -y
+RUN apt-get install -y cron openssh-server gnutls-bin ssl-cert apache2 php-cgi libapache2-mod-php php-mbstring php-common php-pear ldap-account-manager
+# php slapd ldap-utils cron openssh-server gnutls-bin ssl-cert apache2 php-cgi libapache2-mod-php php-mbstring php-common php-pear ldap-account-manager
+RUN mkdir -p /home/zee
+RUN touch /home/zee/service.log
+COPY cron_config /home/zee/cron_config
+COPY service.sh /home/zee/service.sh
+RUN chmod -R 0744 /home
+RUN chmod -R +x /home
+RUN crontab /home/zee/cron_config
+WORKDIR /home
 
-#
-# Expose port 80 - HTTP
 EXPOSE 80
-
-#
-# Expose port 22 - SSH
 EXPOSE 22
-
-#
-# Expose port 443 - HTTPS
 EXPOSE 443
-
-#
-# Expose port 389 - LDAP
 EXPOSE 389
-
-#
-# Expose port 636 - LDAPS
 EXPOSE 636
 
-#
-# Last is the actual command to start up all required services within our Container
-CMD service ssh start && service slapd start && service apache2 start
+CMD cron -f
